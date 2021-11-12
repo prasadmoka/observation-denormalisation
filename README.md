@@ -1,0 +1,1 @@
+# service-scala-databus-observations-denormalisation

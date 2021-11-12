@@ -1,0 +1,65 @@
+plugins {
+    id 'scala'
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
+    id 'com.palantir.docker' version '0.30.0'
+    id 'com.adarshr.test-logger' version '3.0.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
+
+ext {
+    scalaMajorVersion = '2.12'
+    scalaVersion = '2.12.15'
+    flinkVersion = '1.14.0'
+    kafkaVersion = '2.8.1'
+    jacksonVersion = '2.13.0'
+}
+
+dependencies {
+
+    implementation "org.scala-lang:scala-library:${scalaVersion}"
+    implementation "org.apache.flink:flink-streaming-scala_${scalaMajorVersion}:${flinkVersion}"
+    implementation "org.apache.flink:flink-connector-kafka_${scalaMajorVersion}:${flinkVersion}"
+    implementation "org.apache.kafka:kafka-clients:${kafkaVersion}"
+    implementation 'joda-time:joda-time:2.2'
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    implementation "com.google.code.gson:gson:2.8.9"
+    implementation "com.typesafe:config:1.4.1"
+    // https://mvnrepository.com/artifact/com.github.blemale/scaffeine
+    implementation "com.github.blemale:scaffeine_${scalaMajorVersion}:5.1.1"
+    // https://mvnrepository.com/artifact/com.github.java-json-tools/json-schema-validator
+    implementation 'com.github.java-json-tools:json-schema-validator:2.2.8'
+    implementation 'redis.clients:jedis:2.9.0'
+
+    // implementation 'org.apache.flink:flink-clients_2.12:1.14.0'
+
+    // Use Munit for testing our library
+    testImplementation "org.scalameta:munit_${scalaMajorVersion}:0.7.29"
+    testImplementation "org.apache.flink:flink-test-utils_${scalaMajorVersion}:${flinkVersion}"
+    testImplementation "io.github.embeddedkafka:embedded-kafka_${scalaMajorVersion}:3.0.0"
+    // https://mvnrepository.com/artifact/org.mockito/mockito-core
+    testImplementation 'org.mockito:mockito-core:3.3.3'
+    testImplementation "org.scalatest:scalatest_${scalaMajorVersion}:3.0.6"
+    testImplementation "org.apache.flink:flink-streaming-java_2.12:1.13.0:tests"
+}
+
+shadowJar {
+    archiveClassifier.set('')
+    manifest {
+        attributes 'Main-Class': 'org.syngenta.transformer.task.TransformerStreamTask'
+    }
+}
+
+docker {
+    name "${project.name}:${project.version}"
+    dockerfile file('Dockerfile')
+    files shadowJar.outputs
+    buildArgs(['JAR_FILE': shadowJar.archiveFileName.get()])
+}
+
+docker.dependsOn(shadowJar)

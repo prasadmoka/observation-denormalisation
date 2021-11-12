@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "id": "https://syngenta.com/obervation.schema.json",
+  "title": "Observations",
+  "description": "An transformed observation",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "The unique identifier for an observation",
+      "type": "string"
+    },
+    "parentCollectionRef": {
+      "description": "The parent observation reference",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "integrationAccountRef": {
+      "description": "The integration reference account for an observation",
+      "type": "string"
+    },
+    "assetRef": {
+      "description": "The asset reference",
+      "type": "string"
+    },
+    "obsCode": {
+      "description": "The code for an observation",
+      "type": "string"
+    },
+    "phenTime": {
+      "description": "The time for an observation",
+      "type": "string"
+    },
+    "valueUoM": {
+      "description": "The value of an UoM",
+      "type": "string"
+    },
+    "value": {
+      "description": "The value of the obs",
+      "type": "number"
+    },
+    "spatialExtent": {
+      "description": "The spatial details for an observation",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type" : "string"
+        },
+        "latCoordinates": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "lonCoordinates": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [ "type", "latCoordinates", "lonCoordinates" ]
+    },
+    "aggTimeWindow": {
+      "type": "object",
+      "properties": {
+        "componentCode":{
+          "type": "string"
+        },
+        "value": {"type":"number"},
+        "valueUoM": {"type":"string"},
+        "selector": {"type":"string"}
+      },
+      "required": [ "componentCode", "value", "valueUoM", "selector" ]
+    },
+    "aggMethod": {
+      "type": "object",
+      "properties": {
+        "componentCode":{ "type" : "string"},
+        "selector": {"type":"string"}
+      },
+     "required": ["componentCode","selector"]
+    },
+    "parameter": {
+      "type": "object",
+      "properties": {
+        "componentCode": {"type":"string"},
+        "value": {"type":"number"},
+        "selector": {"type":"string"}
+      },
+      "required": ["componentCode", "value","selector"]
+    },
+    "featureOfInterest": {
+      "type": "object",
+      "properties": {
+        "componentCode": {"type":"string"},
+        "selector": {"type":"string"}
+      },
+      "required": ["componentCode","selector"]
+    },
+    "obsProperty": {
+      "type": "object",
+      "properties": {
+        "componentCode": {"type":"string"},
+        "selector": {"type":"string"}
+      },
+      "required": ["componentCode","selector"]
+    },
+    "samplingStrategy": {
+      "type": "object",
+      "properties": {
+        "componentCode": {"type":"string"},
+        "selector": {"type":"string"}
+      },
+      "required": ["componentCode","selector"]
+    },
+    "obsMethod": {
+      "type": "object",
+      "properties": {
+        "componentCode": {"type":"string"},
+        "selector": {"type":"string"}
+      },
+      "required": ["componentCode","selector"]
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "componentCode": {"type":"string"},
+        "selector": {"type":"string"}
+      },
+      "required": ["componentCode","selector"]
+    },
+    "deviceMetadata": {
+      "type": "object",
+      "properties": {
+        "componentCode": {"type":"string"},
+        "selector": {"type":"string"}
+      },
+      "required": ["componentCode","selector"]
+    },
+    "dataQuality": {
+      "type": "object",
+      "properties": {
+        "componentCode": {"type":"string"},
+        "selector": {"type":"string"}
+      },
+      "required": ["componentCode","selector"]
+    },
+    "event": {
+      "type": "object",
+      "properties": {
+        "componentCode": {"type":"string"},
+        "selector": {"type":"string"}
+      },
+      "required": ["componentCode","selector"]
+    }
+  },
+  "required": [ "id","parentCollectionRef","integrationAccountRef", "assetRef", "obsCode","phenTime","valueUoM","value","spatialExtent"]
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "id": "https://syngenta.com/obervation.schema.json",
+  "title": "Canonical Observations",
+  "description": "A canonical observation ",
+  "type": "object",
+  "properties": {
+    "obsCode" : {"type": "string"},
+    "codeComponents" : {
+      "type": "array",
+      "items": {
+          "type": "object",
+          "properties": {
+            "componentCode": {
+              "type": "string"
+            },
+            "componentType": {
+              "type": "string",
+              "enum": ["AGG_TIME_WINDOW", "AGG_METHOD","PARAMETER","FEATURE_OF_INTEREST","OBS_PROPERTY","SAMPLING_STRATEGY","OBS_METHOD","METADATA","DEVICE_METADATA","DATA_QUALITY","EVENT"]
+            },
+            "selector": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string"
+            },
+            "valueUoM": {
+              "type": "string"
+            }
+          },
+        "required": ["componentType"]
+        }
+    },
+    "valueUoM": {"type": "string"},
+    "value": {"type": "string"},
+    "id": {"type": "string"},
+    "parentCollectionRef": {"type": "string"},
+    "integrationAccountRef": {"type": "string"},
+    "assetRef": {"type": "string"},
+    "xMin": {"type": "number"},
+    "xMax": {"type": "number"},
+    "yMin": {"type": "number"},
+    "yMax": {"type": "number"},
+    "phenTime": {"type": "string","format": "date-time"},
+    "spatialExtent": {"type" : "string"}
+  },
+  "required": ["id","parentCollectionRef","integrationAccountRef", "assetRef", "obsCode","phenTime","valueUoM","value","spatialExtent"]
+}
