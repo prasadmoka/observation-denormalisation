@@ -5,6 +5,7 @@ import org.apache.flink.streaming.api.functions.ProcessFunction
 import org.apache.flink.util.Collector
 import org.syngenta.denormalizer.asset.AssetDenormalization
 import org.syngenta.denormalizer.config.DenormalizerConfig
+import org.syngenta.denormalizer.util.JSONUtil
 
 import java.util
 
@@ -20,7 +21,7 @@ class DenormalizerFunction(config: DenormalizerConfig)
   override def processElement(event: util.Map[String, AnyRef], context: ProcessFunction[util.Map[String, AnyRef],
     String]#Context, out: Collector[String]): Unit = {
     val denormalisedEvent = assetDenormalisation.denormalize(event)
-
+    context.output(config.denormAssetsTag,JSONUtil.serialize(denormalisedEvent))
   }
 
 }
